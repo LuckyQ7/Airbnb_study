@@ -6,7 +6,7 @@ export const HeaderRightWrapper = styled.div`
 
   .btns {
     display: flex;
-    algin-items: center;
+    align-items: center;
     font-size: 14px;
     font-weight: 600;
     margin-right: 8px;
@@ -60,6 +60,7 @@ export const HeaderRightWrapper = styled.div`
       padding: 5px 0;
       background: #fff;
       user-select: none;
+      z-index: 10;
       .item {
         height: 40px;
         line-height: 30px;
