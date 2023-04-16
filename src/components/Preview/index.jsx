@@ -2,11 +2,15 @@ import React, { memo, useState } from "react";
 import { useEffect } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
+import classNames from "classnames";
 
 import { PreviewWrapper } from "./style";
 import IconClose from "../../assets/svg/icon-close";
 import IconLeft from "../../assets/svg/icon-left";
 import IconRight from "../../assets/svg/icon-right";
+import IconDownArrow from "../../assets/svg/icon-down-arrow";
+import IconUpArrow from "../../assets/svg/icon-up-arrow";
+import Indicator from "../../components/Indicator";
 
 const Preview = memo((props) => {
   const { onClose } = props;
@@ -39,6 +43,13 @@ const Preview = memo((props) => {
     setIndex(newIndex);
   }
 
+  function onIndicatorClick(idx) {
+    setIsNext(idx > index);
+    setIndex(idx);
+  }
+
+  const [isShowIndicator, setIsShowIndicator] = useState(true);
+
   return (
     <PreviewWrapper isNext={isNext}>
       <div className="top">
@@ -64,7 +75,46 @@ const Preview = memo((props) => {
           </SwitchTransition>
         </div>
       </div>
-      <div className="bottom">bottom</div>
+      <div className="bottom">
+        <div className="info">
+          <div className="desc">
+            <div>
+              <span className="count">
+                {index + 1}/{detailInfo?.picture_urls.length}
+              </span>
+              <span>room apartment图片{index + 1}</span>
+            </div>
+
+            <div
+              className="toggle"
+              onClick={() => setIsShowIndicator(!isShowIndicator)}
+            >
+              <span>隐藏照片列表 </span>
+              {isShowIndicator ? (
+                <IconDownArrow width="22" height="22" />
+              ) : (
+                <IconUpArrow width="22" height="22" />
+              )}
+            </div>
+          </div>
+
+          <div className={classNames("list", { hide: !isShowIndicator })}>
+            <Indicator index={index}>
+              {detailInfo?.picture_urls.map((item, idx) => {
+                return (
+                  <div
+                    className={classNames("item", { active: index === idx })}
+                    key={idx}
+                    onClick={() => onIndicatorClick(idx)}
+                  >
+                    <img src={item} alt="" />
+                  </div>
+                );
+              })}
+            </Indicator>
+          </div>
+        </div>
+      </div>
     </PreviewWrapper>
   );
 });

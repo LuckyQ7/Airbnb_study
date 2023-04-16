@@ -95,6 +95,48 @@ export const PreviewWrapper = styled.div`
   }
 
   .bottom {
-    height: 88px;
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    margin-top: 10px;
+    .info {
+      position: absolute;
+      bottom: 10px;
+      max-width: 105vh;
+      color: #fff;
+      overflow: hidden;
+      .desc {
+        display: flex;
+        justify-content: space-between;
+        .toggle {
+          display: flex;
+          cursor: pointer;
+          color: #fff;
+        }
+      }
+      .list {
+        transition: all 200ms;
+        height: 67px;
+        .item {
+          margin-right: 15px;
+          cursor: pointer;
+          opacity: 0.5;
+          img {
+            transition: all 200ms ease;
+            height: 67px;
+            &.hide {
+              height: 0px;
+            }
+          }
+          &.active {
+            opacity: 1;
+          }
+        }
+
+        &.hide {
+          height: 0px;
+        }
+      }
+    }
   }
 `;
